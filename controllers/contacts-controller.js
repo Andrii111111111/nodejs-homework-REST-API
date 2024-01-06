@@ -4,7 +4,6 @@ import Contact, {
   contactUpdateFavoriteSchema,
 } from "../models/Contacts.js";
 
-// import contactsService from "../models/contacts/index.js";
 import { HttpError } from "../helpers/index.js";
 
 const getAllContacts = async (req, res, next) => {
@@ -70,7 +69,7 @@ const delById = async (req, res, next) => {
     if (!result) {
       throw HttpError(404, `Not found`);
     }
-    res.json({ message: "contact deleted" }); // якщо res.status(204).json({message: 'contact deleted'}) - тіло не передається
+    res.json({ message: "contact deleted" });
   } catch (error) {
     next(error);
   }

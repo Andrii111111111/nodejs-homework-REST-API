@@ -19,7 +19,7 @@ const contactSchema = new Schema(
       default: false,
     },
   },
-  { versionKey: false, timestamps: true } // versionKey: false - прибирає __v0, timestamps: true - додає в базу поля дату створення і дату оновлення
+  { versionKey: false, timestamps: true }
 );
 
 contactSchema.post("save", handleSaveError);
