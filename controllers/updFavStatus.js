@@ -31,10 +31,8 @@ const updateStatusContact = async (contactId, body) => {
       throw new HttpError(404, `Contact with id=${contactId} not found`);
     }
 
-    // Оновлення лише поля 'favorite' з тіла запиту
     contact.favorite = body.favorite;
 
-    // Збереження оновленого контакту
     const updatedContact = await contact.save();
 
     return updatedContact;
