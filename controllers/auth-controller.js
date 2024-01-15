@@ -91,6 +91,7 @@ const getCarrent = async (req, res) => {
       subscription,
     });
   } catch (error) {
+    // eslint-disable-next-line no-undef
     next(error);
   }
 };
@@ -117,7 +118,6 @@ const changeAvatar = async (req, res, next) => {
       if (error) throw error;
       image.resize(250, 250);
       image.write(newPath, (error) => {
-       
         if (error) throw error;
       });
     });
