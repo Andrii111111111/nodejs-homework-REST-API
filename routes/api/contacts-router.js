@@ -6,7 +6,6 @@ import {
   isEmptyBody,
   isValidId,
   authenticate,
-  // upload,
 } from "../../middlewares/index.js";
 
 const contactsRouter = express.Router();

@@ -113,7 +113,6 @@ const changeAvatar = async (req, res, next) => {
     const newPath = path.join(avatarDir, filename);
 
     await fs.rename(oldPath, newPath);
-    // Завантажуємо зображення за допомогою Jimp
     Jimp.read(newPath, (error, image) => {
       if (error) throw error;
       image.resize(250, 250);

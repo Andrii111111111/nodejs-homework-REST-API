@@ -13,7 +13,7 @@ const getAllContacts = async (req, res, next) => {
     const result = await Contact.find({ owner }, "-createdAt", {
       skip,
       limit,
-    }).populate("owner", "email subscription"); // skip, limit - передаються 3 параметром
+    }).populate("owner", "email subscription");
     res.json(result);
   } catch (error) {
     next(error);
@@ -81,7 +81,7 @@ const delById = async (req, res, next) => {
     if (!result) {
       throw HttpError(404, `Not found`);
     }
-    res.json({ message: "contact deleted" }); // якщо res.status(204).json({message: 'contact deleted'}) - тіло не передається
+    res.json({ message: "contact deleted" });
   } catch (error) {
     next(error);
   }

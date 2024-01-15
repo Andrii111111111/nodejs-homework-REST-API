@@ -23,6 +23,6 @@ authRouter.patch(
   authenticate,
   upload.single("avatar"),
   authController.changeAvatar
-); // файл очікуємо в полі 'avatar', всі інші поля текстові
+);
 
 export default authRouter;
