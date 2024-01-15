@@ -1,30 +1,28 @@
 import express from "express";
-import authController from "../../controllers/Users/auth-controller.js";
-import { isEmptyBody, authenticate } from "../../middlewares/index.js";
-import { validateBody } from "../../decorators/index.js";
-import { userSignupSchema, userSigninSchema } from "../../models/User.js";
-import updateAvatar from "../../controllers/Users/updateAvatar.js";
+
+import authController from "../../controllers/auth-controller.js";
+import { isEmptyBody, authenticate, upload } from "../../middlewares/index.js";
 
 const authRouter = express.Router();
 
 authRouter.post(
   "/register",
+  upload.single("avatar"),
   isEmptyBody,
-  validateBody(userSignupSchema),
-  authController.register
+  authController.signup
 );
 
-authRouter.post(
-  "/login",
-  isEmptyBody,
-  validateBody(userSigninSchema),
-  authController.signin
-);
-
-authRouter.get("/current", authenticate, authController.getCurrent);
+authRouter.post("/login", isEmptyBody, authController.signin);
 
 authRouter.post("/logout", authenticate, authController.signout);
 
-authRouter.patch("/avatars", authenticate, updateAvatar);
+authRouter.get("/current", authenticate, authController.getCarrent);
+
+authRouter.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  authController.changeAvatar
+); // файл очікуємо в полі 'avatar', всі інші поля текстові
 
 export default authRouter;
