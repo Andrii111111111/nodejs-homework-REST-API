@@ -1,5 +1,5 @@
 import { HttpError } from "../../helpers/index.js";
-import Contact from "../../models/Contact.js"; // Замените на путь к вашей модели
+import Contact from "../../models/Contact.js"; 
 
 const updateById = async (req, res) => {
   const { id } = req.params;
