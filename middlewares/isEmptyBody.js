@@ -1,10 +1,13 @@
 import { HttpError } from "../helpers/index.js";
 
-const isEmptyBody = async (req, res, next) => {
-  const keys = Object.keys(req.body);
-  console.log(req.body);
-  if (!keys.length) {
-    return next(new HttpError(400, "Body must have fields"));
+const isEmptyBody = (req, res, next) => {
+  const { length } = Object.keys(req.body);
+
+  if (!length) {
+    if (req.route.path === "/:contactId/favorite") {
+      return next(HttpError(400, "missing field favorite"));
+    }
+    return next(HttpError(400, "missing fields"));
   }
   next();
 };

@@ -1,43 +1,30 @@
 import jwt from "jsonwebtoken";
-
-import User from "../models/User.js";
-
+import "dotenv/config";
 import { HttpError } from "../helpers/index.js";
-
-import { ctrlWrapper } from "../decorators/index.js";
+import User from "../models/User.js";
 
 const { JWT_SECRET } = process.env;
 
 const authenticate = async (req, res, next) => {
   const { authorization } = req.headers;
-
   if (!authorization) {
-    console.log("Authorization header not found");
-    return next(new HttpError(401, "Authorization header not found"));
+    return next(HttpError(401, "Not authorized"));
   }
-
   const [bearer, token] = authorization.split(" ");
-
   if (bearer !== "Bearer") {
-    console.log("Invalid Bearer format");
-    return next(new HttpError(401, "Invalid Bearer format"));
+    return next(HttpError(401, "Not authorized"));
   }
 
   try {
     const { id } = jwt.verify(token, JWT_SECRET);
     const user = await User.findById(id);
-
-    if (!user || !user.token || user.token !== token) {
-      console.log("User not found");
-      return next(new HttpError(401, "User not authorized"));
+    if (!user || !user.token || token !== user.token) {
+      return next(HttpError(401, "Not authorized"));
     }
-
     req.user = user;
     next();
   } catch (error) {
-    console.log("Authentication failed:", error.message);
-    return next(new HttpError(401, error.message));
+    next(HttpError(401, "Not authorized"));
   }
 };
-
-export default ctrlWrapper(authenticate);
+export default authenticate;
